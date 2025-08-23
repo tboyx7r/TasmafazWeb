@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Tasmafaz Store</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Checkout</h1>
+    </header>
+    <main>
+        <section class="checkout-summary">
+            <h2>Order Summary</h2>
+            <ul>
+                <li>Product 1 <span>₦19.99</span></li>
+                <li>Product 2 <span>₦24.99</span></li>
+                <li>Product 3 <span>₦29.99</span></li>
+            </ul>
+            <p class="total"><strong>Total: </strong>₦74.97</p>
+        </section>
+        <section class="checkout-form">
+            <h2>Shipping Information</h2>
+            <form>
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" name="fullname" required>
+
+                <label for="city">area</label>
+                <input type="text" id="area" name="area" required>
+
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+
+                <button type="submit" class="buy-btn">Place Order</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        &copy; 2025 Tasmafaz Kiddies Shop. All rights reserved.
+    </footer>
+    <!-- ...existing code... -->
+<script>
+window.addEventListener("DOMContentLoaded", function() {
+    // Get cart from localStorage
+    let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const summaryList = document.querySelector(".checkout-summary ul");
+    const totalP = document.querySelector(".checkout-summary .total");
+    summaryList.innerHTML = "";
+    let total = 0;
+
+    if (cart.length === 0) {
+        summaryList.innerHTML = "<li>Your cart is empty.</li>";
+        totalP.innerHTML = "<strong>Total: </strong>₦0";
+    } else {
+        cart.forEach(item => {
+            summaryList.innerHTML += `<li>
+                <img src="${item.img}" alt="${item.name}" style="width:32px;height:32px;vertical-align:middle;margin-right:8px;border-radius:4px;">
+                ${item.name} <span>${item.price}</span>
+            </li>`;
+            // Remove non-numeric for total calculation
+            let priceNum = Number(item.price.replace(/[^\d.]/g, ""));
+            total += priceNum;
+        });
+        totalP.innerHTML = `<strong>Total: </strong>₦${total.toLocaleString()}`;
+    }
+});
+</script>
+<!-- ...existing code... -->
+</body>
+</html>
